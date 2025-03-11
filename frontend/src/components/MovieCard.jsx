@@ -10,7 +10,7 @@ const MovieCard = ({ movie }) => {
     <div className="movie-card">
       <div className="movie-poster">
         <img
-          src={`https://image.tmbd.org/t/p/w500${movie.poster_path}`}
+          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
           alt={movie.title}
         />
         <div className="movie-overlay">
