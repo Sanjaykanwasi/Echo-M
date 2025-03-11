@@ -1,39 +1,29 @@
 import React from "react";
 import MovieCard from "../components/MovieCard";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { searchMovies, getPopularMovies } from "../services/api";
 import "../css/Home.css";
 
 const Home = () => {
-  // Array of Movies
-  const movies = [
-    {
-      id: 1,
-      title: "The Batman",
-      release_date: "2024",
-    },
-    {
-      id: 2,
-      title: "Drive",
-      release_date: "2016",
-    },
-    {
-      id: 3,
-      title: "Joker",
-      release_date: "2020",
-    },
-    {
-      id: 4,
-      title: "Avenger's Endgame",
-      release_date: "2019",
-    },
-    {
-      id: 5,
-      title: "Dead Pool",
-      release_date: "2015",
-    },
-  ];
-
+  const [movies, setMovies] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadPopularMovies = async () => {
+      try {
+        const popularMovies = await getPopularMovies();
+        setMovies(popularMovies);
+      } catch (err) {
+        console.log(err);
+        setError("Failed to load movie");
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadPopularMovies();
+  }, []);
 
   //   Submit Handler
   const submitHandler = (e) => {
