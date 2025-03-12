@@ -1,7 +1,7 @@
 import "../css/MovieCard.css";
 import { useMovieContext } from "../contexts/MovieContext";
 import { useState } from "react";
-import MovieTrailer from "./MovieTrailer";
+import TrailerModal from "./TrailerModal";
 
 function MovieCard({ movie }) {
   const { isFavorite, addToFavorites, removeFromFavorites } = useMovieContext();
@@ -28,10 +28,7 @@ function MovieCard({ movie }) {
           >
             ♥
           </button>
-          <button
-            className="trailer-btn"
-            onClick={() => setShowTrailer(!showTrailer)}
-          >
+          <button className="trailer-btn" onClick={() => setShowTrailer(true)}>
             🎬 Watch Trailer
           </button>
         </div>
@@ -40,7 +37,12 @@ function MovieCard({ movie }) {
         <h3>{movie.title}</h3>
         <p>{movie.release_date?.split("-")[0]}</p>
       </div>
-      {showTrailer && <MovieTrailer movieId={movie.id} />}
+      {showTrailer && (
+        <TrailerModal
+          movieId={movie.id}
+          onClose={() => setShowTrailer(false)}
+        />
+      )}
     </div>
   );
 }
