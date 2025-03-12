@@ -1,9 +1,12 @@
 import "../css/MovieCard.css";
 import { useMovieContext } from "../contexts/MovieContext";
+import { useState } from "react";
+import MovieTrailer from "./MovieTrailer";
 
 function MovieCard({ movie }) {
   const { isFavorite, addToFavorites, removeFromFavorites } = useMovieContext();
   const favorite = isFavorite(movie.id);
+  const [showTrailer, setShowTrailer] = useState(false);
 
   function onFavoriteClick(e) {
     e.preventDefault();
@@ -25,12 +28,19 @@ function MovieCard({ movie }) {
           >
             ♥
           </button>
+          <button
+            className="trailer-btn"
+            onClick={() => setShowTrailer(!showTrailer)}
+          >
+            🎬 Watch Trailer
+          </button>
         </div>
       </div>
       <div className="movie-info">
         <h3>{movie.title}</h3>
         <p>{movie.release_date?.split("-")[0]}</p>
       </div>
+      {showTrailer && <MovieTrailer movieId={movie.id} />}
     </div>
   );
 }
