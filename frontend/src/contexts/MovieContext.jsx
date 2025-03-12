@@ -5,34 +5,35 @@ const MovieContext = createContext();
 export const useMovieContext = () => useContext(MovieContext);
 
 export const MovieProvider = ({ children }) => {
-  const [favourites, setFavourites] = useState([]);
+  const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
-    const storedFavourites = localStorage.getItem("favourites");
-    if (setFavourites) setFavourites(JSON.parse(storedFavourites));
+    const storedFavs = localStorage.getItem("favorites");
+
+    if (storedFavs) setFavorites(JSON.parse(storedFavs));
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("favourites", JSON.stringify(favourites));
-  }, [favourites]);
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  }, [favorites]);
 
-  const addToFavourites = (movie) => {
-    setFavourites((prev) => [...prev, movie]);
+  const addToFavorites = (movie) => {
+    setFavorites((prev) => [...prev, movie]);
   };
 
-  const removeFromFavourites = (movieId) => {
-    setFavourites((prev) => prev.filter((movie) => movie.id !== movieId));
+  const removeFromFavorites = (movieId) => {
+    setFavorites((prev) => prev.filter((movie) => movie.id !== movieId));
   };
 
-  const isFavourite = (movieId) => {
-    return favourites.some((movie) => movie.id === movieId);
+  const isFavorite = (movieId) => {
+    return favorites.some((movie) => movie.id === movieId);
   };
 
   const value = {
-    favourites,
-    addToFavourites,
-    removeFromFavourites,
-    isFavourite,
+    favorites,
+    addToFavorites,
+    removeFromFavorites,
+    isFavorite,
   };
 
   return (
