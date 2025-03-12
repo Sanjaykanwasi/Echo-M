@@ -5,7 +5,7 @@ const TrailerModal = ({ movieId, onClose }) => {
 
   useEffect(() => {
     fetch(
-      `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=YOUR_TMDB_API_KEY`
+      `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=c4fd0676515360ceeaecd14acdb2ca75`
     )
       .then((res) => res.json())
       .then((data) => {
