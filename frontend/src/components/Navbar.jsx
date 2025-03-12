@@ -1,27 +1,22 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import "../css/Navbar.css";
-import logo from "../assets/logo.png";
 
-const Navbar = () => {
+function NavBar() {
   return (
-    <div className="navbar">
-      <div className="navbar-brand flex">
-        <img src={logo} className="w-12 h-12" alt="Logo" />
-        <Link className="!text-white" to="/">
-          Echo-M
-        </Link>
+    <nav className="navbar">
+      <div className="navbar-brand">
+        <Link to="/">Movie App</Link>
       </div>
       <div className="navbar-links">
-        <Link to="/" className="nav-link !text-white">
-          Home{" "}
+        <Link to="/" className="nav-link">
+          Home
         </Link>
-        <Link to="/favourites" className="nav-link !text-white">
-          Favourites{" "}
+        <Link to="/favorites" className="nav-link">
+          Favorites
         </Link>
       </div>
-    </div>
+    </nav>
   );
-};
+}
 
-export default Navbar;
+export default NavBar;

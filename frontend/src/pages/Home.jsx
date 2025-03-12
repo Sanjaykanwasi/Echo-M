@@ -1,12 +1,11 @@
-import React from "react";
 import MovieCard from "../components/MovieCard";
 import { useState, useEffect } from "react";
 import { searchMovies, getPopularMovies } from "../services/api";
 import "../css/Home.css";
 
-const Home = () => {
-  const [movies, setMovies] = useState([]);
+function Home() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [movies, setMovies] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -17,32 +16,28 @@ const Home = () => {
         setMovies(popularMovies);
       } catch (err) {
         console.log(err);
-        setError("Failed to load movie");
+        setError("Failed to load movies...");
       } finally {
         setLoading(false);
       }
     };
+
     loadPopularMovies();
   }, []);
 
-  //   Submit Handler
-  const submitHandler = async (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
-    if (!searchQuery.trim()) {
-      return;
-    }
+    if (!searchQuery.trim()) return;
+    if (loading) return;
 
     setLoading(true);
-    if (loading) {
-      return;
-    }
-
     try {
       const searchResults = await searchMovies(searchQuery);
       setMovies(searchResults);
       setError(null);
     } catch (err) {
-      setError("Failed to load Movie...");
+      console.log(err);
+      setError("Failed to search movies...");
     } finally {
       setLoading(false);
     }
@@ -50,15 +45,15 @@ const Home = () => {
 
   return (
     <div className="home">
-      <form onSubmit={submitHandler} className="search-form">
+      <form onSubmit={handleSearch} className="search-form">
         <input
           type="text"
+          placeholder="Search for movies..."
+          className="search-input"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search"
-          className="search-input text-white"
         />
-        <button type="submit" className="search-btn bg-red-400 rounded-xl p-2">
+        <button type="submit" className="search-button">
           Search
         </button>
       </form>
@@ -70,12 +65,12 @@ const Home = () => {
       ) : (
         <div className="movies-grid">
           {movies.map((movie) => (
-            <MovieCard key={movie.id} movie={movie} />
+            <MovieCard movie={movie} key={movie.id} />
           ))}
         </div>
       )}
     </div>
   );
-};
+}
 
 export default Home;
