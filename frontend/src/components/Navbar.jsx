@@ -12,7 +12,7 @@ const Navbar = () => {
           Echo-M
         </Link>
       </div>
-      <div className="navbars-link">
+      <div className="navbar-links">
         <Link to="/" className="nav-link !text-white">
           Home{" "}
         </Link>
